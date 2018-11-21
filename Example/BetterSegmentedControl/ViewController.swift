@@ -55,10 +55,12 @@ class ViewController: UIViewController {
                                             selectedTextColor: UIColor(red:0.97, green:0.00, blue:0.24, alpha:1.00)),
             index: 1,
             options: [.backgroundColor(UIColor(red:0.11, green:0.12, blue:0.13, alpha:1.00)),
-                      .indicatorViewBackgroundColor(UIColor(red:0.11, green:0.12, blue:0.13, alpha:1.00)),
+//                      .indicatorViewBackgroundColor(UIColor(red:0.11, green:0.12, blue:0.13, alpha:1.00)),
+					  .indicatorViewBackgroundColor(.blue),
+					  .indicatorViewBottomStyleHeight(10),
                       .cornerRadius(0.0),
                       .bouncesOnChange(false),
-                      .panningDisabled(true)])
+                      .panningDisabled(false)])
         view.addSubview(viewSegmentedControl)
         
         // Control 5: Basic Icons

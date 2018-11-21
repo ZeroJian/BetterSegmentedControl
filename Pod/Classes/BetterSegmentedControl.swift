@@ -84,6 +84,8 @@ import Foundation
                     indicatorViewBorderWidth = value
                 case let .indicatorViewBorderColor(value):
                     indicatorViewBorderColor = value
+				case let .indicatorViewBottomStyleHeight(value):
+					indicatorViewBottomStyleHeight = value
                 case let .alwaysAnnouncesValue(value):
                     alwaysAnnouncesValue = value
                 case let .announcesValueImmediately(value):
@@ -153,6 +155,12 @@ import Foundation
             indicatorView.layer.borderColor = newValue?.cgColor
         }
     }
+	
+	
+	public var indicatorViewBottomStyleHeight: CGFloat? {
+		didSet { setNeedsLayout() }
+	}
+
     
     // MARK: Private properties
     private let normalSegmentsView = UIView()
@@ -237,8 +245,13 @@ import Foundation
         
         normalSegmentsView.frame = bounds
         selectedSegmentsView.frame = bounds
-        
-        indicatorView.frame = elementFrame(forIndex: index)
+		
+		var frame = elementFrame(forIndex: index)
+		if let height = indicatorViewBottomStyleHeight {
+			frame.origin.y += frame.size.height - height
+			frame.size.height = height
+		}
+		indicatorView.frame = frame
         
         for index in 0...normalSegmentCount-1 {
             let frame = elementFrame(forIndex: UInt(index))
@@ -329,7 +342,12 @@ import Foundation
         return UInt(distances.index(of: distances.min()!)!)
     }
     private func moveIndicatorView() {
-        indicatorView.frame = normalSegments[Int(self.index)].frame
+		var frame = normalSegments[Int(self.index)].frame
+		if let height = indicatorViewBottomStyleHeight {
+			frame.origin.y += frame.size.height - height
+			frame.size.height = height
+		}
+		indicatorView.frame = frame
         layoutIfNeeded()
     }
     
